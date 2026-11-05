@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\BukuController as ApiBukuController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
@@ -93,6 +94,13 @@ Route::middleware('auth')->group(function () {
         Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])
             ->middleware('permission:kelola role pengguna')->name('users.role');
     });
+    
+    // =====================================================
+    // SOAL 1: CELAH SENGAJA (A2, A3, A4), hanya di balik middleware auth
+    // =====================================================
+    Route::get('/buku-cari', [BukuController::class, 'cari']);                    // A2
+    Route::get('/buku/{buku}/hapus', [ApiBukuController::class, 'destroy']);      // A3
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);        // A4
 });
 
 // Rute login, register, logout (middleware guest dan auth dari Breeze)

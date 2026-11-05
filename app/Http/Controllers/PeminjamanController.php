@@ -37,4 +37,12 @@ class PeminjamanController extends Controller
 
         return back()->with('status', 'Peminjaman ditolak.');
     }
+
+    // SOAL 1 (A4): RENTAN. Tanpa pemeriksaan pemilik
+    public function show($id)
+    {
+        $peminjaman = Peminjaman::with(['buku.kategori', 'anggota'])->findOrFail($id);
+
+        return view('peminjaman.detail', compact('peminjaman'));
+    }
 }

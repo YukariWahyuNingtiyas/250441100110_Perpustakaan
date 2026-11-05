@@ -95,7 +95,7 @@
                     @forelse ($bukuTerbaru as $b)
                         <tr>
                             <td>{{ $b->id }}</td>
-                            <td>{{ $b->judul }}</td>{{-- A1-MARKER --}}
+                            <td>{!! $b->judul !!}</td>{{-- A1-MARKER: RENTAN, tanpa escaping --}}
                             <td>{{ $b->penulis }}</td>
                             <td>
                                 <div class="aksi-baris">

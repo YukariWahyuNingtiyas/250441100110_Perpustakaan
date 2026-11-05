@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
@@ -64,6 +65,18 @@ class BukuController extends Controller
         $buku->update($data);
 
         return redirect()->route('buku.index')->with('status', 'Buku berhasil diperbarui.');
+    }
+
+        // SOAL 1 (A2): RENTAN. Nilai judul digabung langsung ke string SQL
+    public function cari(Request $request)
+    {
+        $judul = $request->query('judul');
+
+        $hasil = DB::select(
+            "SELECT id, judul, penulis FROM bukus WHERE judul = '$judul'"
+        );
+
+        return response()->json($hasil);
     }
 
     private function aturan(?Buku $buku = null): array
