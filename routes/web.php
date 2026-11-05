@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\BukuController as ApiBukuController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
@@ -34,8 +33,8 @@ Route::middleware('auth')->group(function () {
         ->middleware('permission:lihat daftar buku')
         ->name('buku.index');
 
-    // Buku: tambah dan ubah (HARUS di atas /buku/{id})
-    Route::middleware('permission:kelola data buku')->group(function () {
+    // Buku: tambah, ubah, hapus (Gate kelola-buku), HARUS di atas /buku/{id}
+    Route::middleware('can:kelola-buku')->group(function () {
         Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
         Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');
@@ -47,6 +46,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/buku/{id}', [BukuController::class, 'detail'])
         ->middleware('permission:lihat daftar buku')
         ->name('buku.detail');
+
+    // Pencarian buku (query binding) dan detail peminjaman (Policy, Soal 4)
+    Route::get('/buku-cari', [BukuController::class, 'cari']);
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);
 
     // Profil milik sendiri (Breeze)
     Route::get('/profile', [ProfileController::class, 'edit'])
@@ -94,11 +97,6 @@ Route::middleware('auth')->group(function () {
         Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])
             ->middleware('permission:kelola role pengguna')->name('users.role');
     });
-    
-    // =====================================================
-    // SOAL 2: A2 (sudah ditambal) dan A4 (masih rentan, ditambal di Soal 4)    // =====================================================
-    Route::get('/buku-cari', [BukuController::class, 'cari']);                    // A2
-    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);        // A4
 });
 
 // Rute login, register, logout (middleware guest dan auth dari Breeze)

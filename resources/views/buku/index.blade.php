@@ -11,7 +11,7 @@
 
     <div id="pesan" class="pesan" hidden></div>
 
-    @can('kelola data buku')
+    @can('kelola-buku')
     <form id="form-buku" class="form-buku" novalidate>
         <h3 id="judul-form">Tambah Buku</h3>
 
@@ -82,7 +82,7 @@
     <div class="kartu" style="margin-top:22px">
         <h3>Judul Buku Terbaru (ditampilkan oleh Blade)</h3>
 
-        @can('kelola data buku')
+        @can('kelola-buku')
             <p><a href="{{ route('buku.create') }}" class="tombol tombol-kecil">Tambah Buku (halaman form)</a></p>
         @endcan
 
@@ -101,7 +101,7 @@
                                 <div class="aksi-baris">
                                     <a class="tombol tombol-kecil tombol-biru" href="{{ route('buku.detail', $b->id) }}">Detail</a>
 
-                                    @can('kelola data buku')
+                                    @can('kelola-buku')
                                         <a class="tombol tombol-kecil" href="{{ route('buku.edit', $b) }}">Ubah</a>
                                         <form method="POST" action="{{ route('buku.destroy', $b) }}" class="sebaris"
                                               data-konfirmasi="Hapus buku {{ $b->judul }}?">
@@ -124,7 +124,7 @@
     <script>
         const API = "{{ url('/api/buku') }}";
         const WEB = "{{ url('/buku') }}";
-        const BISA_KELOLA = @json(auth()->user()->can('kelola data buku'));   // hanya untuk tampilan
+        const BISA_KELOLA = @json(auth()->user()->can('kelola-buku'));   // hanya untuk tampilan
         const HEADER = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',

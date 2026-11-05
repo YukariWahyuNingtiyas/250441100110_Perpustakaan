@@ -3,8 +3,8 @@
 use App\Http\Controllers\Api\BukuController;
 use Illuminate\Support\Facades\Route;
 
-// Grup 'web' memberi session dan CSRF, 'auth' memastikan sudah login,
-// lalu permission Spatie membatasi per aksi.
+// Grup 'web' memberi session dan CSRF, 'auth' memastikan sudah login.
+// Membaca: permission Spatie. Menulis (tambah, ubah, hapus): Gate kelola-buku.
 Route::middleware(['web', 'auth'])->group(function () {
 
     Route::apiResource('buku', BukuController::class)
@@ -14,6 +14,6 @@ Route::middleware(['web', 'auth'])->group(function () {
 
     Route::apiResource('buku', BukuController::class)
         ->only(['store', 'update', 'destroy'])
-        ->middleware('permission:kelola data buku')
+        ->middleware('can:kelola-buku')
         ->names('api.buku');
 });
