@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Gate;
 use App\Models\Buku;
 use App\Models\Peminjaman;
 use Illuminate\Http\Request;
@@ -53,14 +54,12 @@ class PeminjamanSayaController extends Controller
         return back()->with('status', 'Pengajuan peminjaman berhasil dikirim.');
     }
 
+    // SOAL 4: pemeriksaan pemilik manual Modul 5 diganti Policy
     public function show(Request $request, Peminjaman $peminjaman)
     {
+        Gate::authorize('view', $peminjaman);
+
         $peminjaman->load(['buku.kategori', 'anggota']);
-
-        $pemilik = $peminjaman->anggota?->user_id === $request->user()->id;
-
-        // Boleh jika miliknya sendiri, atau petugas/admin yang berhak mengelola peminjaman
-        abort_unless($pemilik || $request->user()->can('kelola peminjaman'), 403);
 
         return view('peminjaman.detail', compact('peminjaman'));
     }
