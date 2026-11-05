@@ -95,7 +95,7 @@
                     @forelse ($bukuTerbaru as $b)
                         <tr>
                             <td>{{ $b->id }}</td>
-                            <td>{!! $b->judul !!}</td>{{-- A1-MARKER: RENTAN, tanpa escaping --}}
+                            <td>{{ $b->judul }}</td>{{-- A1-MARKER: AMAN, di-escape --}}
                             <td>{{ $b->penulis }}</td>
                             <td>
                                 <div class="aksi-baris">
@@ -103,7 +103,12 @@
 
                                     @can('kelola data buku')
                                         <a class="tombol tombol-kecil" href="{{ route('buku.edit', $b) }}">Ubah</a>
-                                        {{-- SOAL-2C-MARKER: form Hapus ditambahkan di sini --}}
+                                        <form method="POST" action="{{ route('buku.destroy', $b) }}" class="sebaris"
+                                              data-konfirmasi="Hapus buku {{ $b->judul }}?">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="tombol tombol-kecil tombol-merah">Hapus</button>
+                                        </form>
                                     @endcan
                                 </div>
                             </td>

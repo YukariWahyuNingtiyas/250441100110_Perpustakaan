@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
         Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');
         Route::put('/buku/{buku}', [BukuController::class, 'update'])->name('buku.update');
-        // SOAL-2C-MARKER: route DELETE ditambahkan di sini
+        Route::delete('/buku/{buku}', [BukuController::class, 'destroy'])->name('buku.destroy');
     });
 
     // Buku: detail
@@ -96,10 +96,8 @@ Route::middleware('auth')->group(function () {
     });
     
     // =====================================================
-    // SOAL 1: CELAH SENGAJA (A2, A3, A4), hanya di balik middleware auth
-    // =====================================================
+    // SOAL 2: A2 (sudah ditambal) dan A4 (masih rentan, ditambal di Soal 4)    // =====================================================
     Route::get('/buku-cari', [BukuController::class, 'cari']);                    // A2
-    Route::get('/buku/{buku}/hapus', [ApiBukuController::class, 'destroy']);      // A3
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);        // A4
 });
 

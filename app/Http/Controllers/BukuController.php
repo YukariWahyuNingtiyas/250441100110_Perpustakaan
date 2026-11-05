@@ -67,13 +67,14 @@ class BukuController extends Controller
         return redirect()->route('buku.index')->with('status', 'Buku berhasil diperbarui.');
     }
 
-        // SOAL 1 (A2): RENTAN. Nilai judul digabung langsung ke string SQL
+        // SOAL 2b (A2): DITAMBAL. Query binding, nilai dikirim terpisah dari perintah SQL
     public function cari(Request $request)
     {
         $judul = $request->query('judul');
 
         $hasil = DB::select(
-            "SELECT id, judul, penulis FROM bukus WHERE judul = '$judul'"
+            'SELECT id, judul, penulis FROM bukus WHERE judul = ?',
+            [$judul]
         );
 
         return response()->json($hasil);
