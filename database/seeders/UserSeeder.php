@@ -12,7 +12,8 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        $this->buatUser('Administrator', 'admin@gmail.com', 'admin');
+        // SOAL 5c: password admin diganti, tidak lagi "password"
+        $this->buatUser('Administrator', 'admin@gmail.com', 'admin', 'Adm1n#250441100110');
         $this->buatUser('Petugas Perpustakaan', 'petugas@gmail.com', 'petugas');
         $siswa1 = $this->buatUser('Siswa Satu', 'siswa@gmail.com', 'siswa');
         $siswa2 = $this->buatUser('Siswa Dua', 'siswa2@gmail.com', 'siswa');
@@ -43,11 +44,11 @@ class UserSeeder extends Seeder
         }
     }
 
-    private function buatUser(string $nama, string $email, string $role): User
+    private function buatUser(string $nama, string $email, string $role, string $password = 'password'): User
     {
-        $user = User::firstOrCreate(
+        $user = User::updateOrCreate(
             ['email' => $email],
-            ['name' => $nama, 'password' => Hash::make('password')]
+            ['name' => $nama, 'password' => Hash::make($password)]
         );
         $user->syncRoles([$role]);
 

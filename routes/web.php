@@ -98,6 +98,9 @@ Route::middleware('auth')->group(function () {
             ->middleware('permission:kelola role pengguna')->name('users.role');
     });
 });
-
+    // SOAL 5a: route sementara, HAPUS setelah diuji
+    Route::get('/demo/error', function () {
+        throw new \RuntimeException('Contoh kesalahan untuk demo APP_DEBUG 250441100110');
+    });
 // Rute login, register, logout (middleware guest dan auth dari Breeze)
 require __DIR__.'/auth.php';
