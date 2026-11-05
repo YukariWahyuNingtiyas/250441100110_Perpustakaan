@@ -1,0 +1,437 @@
+/* ===== Dasar ===== */
+:root {
+    --brand: #8B3A4A;
+    --brand-gelap: #642C38;
+    --brand-muda: #F7ECEE;
+    --latar: #F7F2EE;
+    --garis: #E5D9D5;
+    --teks: #2F2527;
+    --teks-lembut: #75686A;
+}
+
+[hidden] { display: none !important; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    background: var(--latar);
+    color: var(--teks);
+    line-height: 1.55;
+}
+
+.halaman {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 1100px;
+    margin: 28px auto;
+    padding: 0 20px;
+}
+
+/* ===== Header, menu, footer (dipakai semua halaman) ===== */
+.kepala-situs {
+    background: linear-gradient(135deg, #642C38, #8B3A4A);
+    color: #fff;
+    padding: 26px 20px 22px;
+    text-align: center;
+}
+
+.kepala-situs h1 {
+    margin: 0;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.kepala-situs p {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    opacity: 0.85;
+}
+
+.menu-utama {
+    background: #fff;
+    border-bottom: 1px solid var(--garis);
+    box-shadow: 0 2px 8px rgba(100, 44, 56, 0.07);
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.menu-dalam {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 4px 16px;
+}
+
+.menu-kiri,
+.menu-kanan {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.menu-utama a,
+.menu-utama .tautan-keluar {
+    display: inline-flex;
+    align-items: center;
+    padding: 15px 14px 12px;
+    color: var(--brand);
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.menu-utama a:hover,
+.menu-utama .tautan-keluar:hover {
+    color: var(--brand-gelap);
+    background: var(--brand-muda);
+}
+
+.menu-utama a.aktif {
+    color: var(--brand-gelap);
+    border-bottom-color: var(--brand);
+}
+
+.form-keluar { margin: 0; display: inline-flex; }
+
+.info-pengguna {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--teks);
+}
+
+.kaki-situs {
+    margin-top: 40px;
+    padding: 18px;
+    text-align: center;
+    background: var(--brand-gelap);
+    color: #fff;
+}
+
+.kaki-situs p { margin: 0; }
+
+/* ===== Judul halaman ===== */
+.judul-halaman,
+main > h2 {
+    margin: 0 0 6px;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--brand-gelap);
+}
+
+.sub-halaman {
+    margin: 0 0 22px;
+    color: var(--teks-lembut);
+}
+
+.kepala-halaman { margin-bottom: 18px; }
+.kepala-halaman h2 {
+    margin: 0;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--brand-gelap);
+}
+
+/* ===== Kartu dan ringkasan ===== */
+.kartu,
+.form-buku {
+    background: #fff;
+    border: 1px solid var(--garis);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 14px rgba(100, 44, 56, 0.07);
+}
+
+.kartu h3,
+.form-buku h3 {
+    margin: 0 0 14px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand);
+}
+
+.kartu p { margin: 0 0 12px; }
+.kartu p:last-child { margin-bottom: 0; }
+
+.grid-ringkas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.kartu-angka {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    background: #fff;
+    border: 1px solid var(--garis);
+    border-left: 5px solid var(--brand);
+    border-radius: 12px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 14px rgba(100, 44, 56, 0.07);
+}
+
+.kartu-angka .label { font-size: 0.85rem; color: var(--teks-lembut); }
+.kartu-angka .nilai { font-size: 2rem; font-weight: 700; color: var(--brand-gelap); line-height: 1.1; }
+
+.hero {
+    background: #fff;
+    border: 1px solid var(--garis);
+    border-radius: 16px;
+    padding: 48px 28px;
+    text-align: center;
+    margin-bottom: 22px;
+    box-shadow: 0 4px 14px rgba(100, 44, 56, 0.07);
+}
+
+.hero h2 { margin: 0 0 10px; font-size: 2rem; color: var(--brand-gelap); }
+.hero p { margin: 0 auto 22px; max-width: 560px; color: var(--teks-lembut); }
+
+/* ===== Tombol ===== */
+.tombol {
+    padding: 9px 16px;
+    background: var(--brand);
+    color: #fff;
+    border: 2px solid var(--brand);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+a.tombol { display: inline-block; text-decoration: none; }
+
+.tombol:hover { background: var(--brand-gelap); border-color: var(--brand-gelap); }
+.tombol:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.tombol-abu { background: #75686A; border-color: #75686A; }
+.tombol-abu:hover { background: #5d5254; border-color: #5d5254; }
+.tombol-merah { background: #B3261E; border-color: #B3261E; }
+.tombol-merah:hover { background: #8C1D18; border-color: #8C1D18; }
+.tombol-hijau { background: #2E7D32; border-color: #2E7D32; }
+.tombol-hijau:hover { background: #1F5E24; border-color: #1F5E24; }
+.tombol-biru { background: #2F6F8F; border-color: #2F6F8F; }
+.tombol-biru:hover { background: #1F4F68; border-color: #1F4F68; }
+.tombol-garis { background: transparent; color: var(--brand); }
+.tombol-garis:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+.tombol-kecil { padding: 5px 12px; font-size: 0.85rem; }
+.tombol-besar { padding: 12px 26px; font-size: 1rem; }
+
+.aksi-baris { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.aksi-baris.pusat { justify-content: center; }
+.sebaris { display: flex; gap: 8px; align-items: center; margin: 0; }
+
+/* ===== Formulir ===== */
+.baris-form { margin-bottom: 14px; }
+
+.baris-form label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--teks-lembut);
+}
+
+.baris-form input,
+.baris-form select,
+.kontrol {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--garis);
+    border-radius: 8px;
+    font: inherit;
+    background: #fff;
+    color: var(--teks);
+}
+
+.baris-form input:focus,
+.baris-form select:focus,
+.kontrol:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(139, 58, 74, 0.15);
+}
+
+.kontrol-kecil { width: auto; padding: 6px 10px; }
+.kontrol-lebar { flex: 1; min-width: 260px; }
+
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0 18px;
+    align-items: end;
+}
+
+.petunjuk { display: block; margin-top: 6px; font-size: 0.85rem; color: var(--teks-lembut); }
+.error-field { display: block; margin-top: 4px; font-size: 0.85rem; color: #B3261E; }
+
+/* ===== Tabel ===== */
+.bungkus-tabel { overflow-x: auto; }
+
+.tabel-buku,
+.tabel-data {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border: 1px solid var(--garis);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tabel-buku th,
+.tabel-buku td,
+.tabel-data th,
+.tabel-data td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--garis);
+    text-align: left;
+    vertical-align: middle;
+}
+
+.tabel-buku th,
+.tabel-data th { background: var(--brand); color: #fff; font-size: 0.9rem; }
+
+.tabel-buku tbody tr:hover,
+.tabel-data tbody tr:hover { background: #fbf7f5; }
+
+.tabel-buku td:last-child { white-space: nowrap; }
+.tabel-kosong { text-align: center; color: var(--teks-lembut); padding: 20px !important; }
+
+.paginasi { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+
+/* ===== Lencana status dan role ===== */
+.lencana {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: #eee;
+    color: #444;
+}
+
+.lencana-diajukan { background: #FFF1CC; color: #8A5A00; }
+.lencana-dipinjam { background: #DCEBF5; color: #1F4F68; }
+.lencana-dikembalikan { background: #DDF3E0; color: #1E5E2A; }
+.lencana-ditolak { background: #FCE4E2; color: #8C1D18; }
+.lencana-admin { background: #F3DDE1; color: #642C38; }
+.lencana-petugas { background: #DCEBF5; color: #1F4F68; }
+.lencana-siswa { background: #DDF3E0; color: #1E5E2A; }
+
+/* ===== Pesan ===== */
+.pesan { padding: 12px 16px; border-radius: 8px; margin-bottom: 16px; }
+.pesan-sukses { background: #E3F4E5; color: #1E5E2A; }
+.pesan-gagal { background: #FCE4E2; color: #8C1D18; }
+.daftar-error { margin: 0; padding-left: 20px; }
+
+/* ===== Halaman login dan registrasi (Breeze) ===== */
+.kotak-masuk {
+    max-width: 440px;
+    margin: 20px auto;
+    background: #fff;
+    border: 1px solid var(--garis);
+    border-radius: 14px;
+    padding: 28px;
+    box-shadow: 0 4px 14px rgba(100, 44, 56, 0.07);
+}
+
+/* ===== Detail (Modul 1) ===== */
+.detail-buku { max-width: 750px; margin: 10px auto; }
+
+.detail-card {
+    background: #fff;
+    padding: 35px;
+    border-radius: 14px;
+    border: 1px solid var(--garis);
+    box-shadow: 0 4px 14px rgba(100, 44, 56, 0.07);
+}
+
+.label-detail { margin: 0 0 8px; color: var(--brand); font-size: 13px; font-weight: bold; letter-spacing: 1px; }
+.detail-card h2 { margin: 0 0 25px; color: var(--brand); font-size: 28px; }
+
+.info-buku { border-top: 1px solid var(--garis); border-bottom: 1px solid var(--garis); margin-bottom: 25px; }
+
+.info-buku p {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 0;
+    margin: 0;
+    border-bottom: 1px solid var(--garis);
+}
+
+.info-buku p:last-child { border-bottom: none; }
+.info-buku strong { color: var(--teks-lembut); }
+
+.tombol-kembali {
+    display: inline-block;
+    padding: 10px 16px;
+    background: var(--brand);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.tombol-kembali:hover { background: var(--brand-gelap); }
+
+/* ===== Kartu buku (Modul 1) ===== */
+.daftar-buku { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 25px; }
+
+.kartu-buku {
+    background: #fff;
+    padding: 24px;
+    border-radius: 12px;
+    border: 1px solid var(--garis);
+    box-shadow: 0 4px 12px rgba(100, 44, 56, 0.08);
+    min-height: 210px;
+    display: flex;
+    flex-direction: column;
+}
+
+.kartu-buku h3 { margin-top: 0; margin-bottom: 15px; color: var(--brand); font-size: 20px; }
+.kartu-buku p { margin: 7px 0; color: var(--teks-lembut); }
+
+.kartu-buku a {
+    display: inline-block;
+    width: fit-content;
+    margin-top: auto;
+    padding: 9px 16px;
+    background: var(--brand);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.kartu-buku a:hover { background: var(--brand-gelap); }
+
+@media (max-width: 700px) {
+    .daftar-buku { grid-template-columns: 1fr; }
+    .kepala-situs h1 { font-size: 1.6rem; }
+    .menu-dalam { justify-content: center; }
+}
