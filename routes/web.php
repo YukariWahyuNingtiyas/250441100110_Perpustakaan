@@ -18,7 +18,6 @@ Route::get('/', function () {
 // Semua rute di bawah ini wajib login (middleware auth)
 Route::middleware('auth')->group(function () {
 
-    // Dashboard: mengarahkan pengguna sesuai role
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])
@@ -29,11 +28,21 @@ Route::middleware('auth')->group(function () {
         ->middleware('permission:akses dashboard petugas')
         ->name('petugas.dashboard');
 
-    // Buku (Modul 1 sampai 4)
+    // Buku: daftar
     Route::get('/buku', [BukuController::class, 'index'])
         ->middleware('permission:lihat daftar buku')
         ->name('buku.index');
 
+    // Buku: tambah dan ubah (HARUS di atas /buku/{id})
+    Route::middleware('permission:kelola data buku')->group(function () {
+        Route::get('/buku/create', [BukuController::class, 'create'])->name('buku.create');
+        Route::post('/buku', [BukuController::class, 'store'])->name('buku.store');
+        Route::get('/buku/{buku}/edit', [BukuController::class, 'edit'])->name('buku.edit');
+        Route::put('/buku/{buku}', [BukuController::class, 'update'])->name('buku.update');
+        // SOAL-2C-MARKER: route DELETE ditambahkan di sini
+    });
+
+    // Buku: detail
     Route::get('/buku/{id}', [BukuController::class, 'detail'])
         ->middleware('permission:lihat daftar buku')
         ->name('buku.detail');

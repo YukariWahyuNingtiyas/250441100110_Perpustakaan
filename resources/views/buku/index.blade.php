@@ -7,6 +7,8 @@
     <h2 class="judul-halaman">Daftar Buku</h2>
     <p class="sub-halaman">Koleksi buku perpustakaan.</p>
 
+    <x-flash />
+
     <div id="pesan" class="pesan" hidden></div>
 
     @can('kelola data buku')
@@ -76,10 +78,48 @@
         <button type="button" id="tombol-berikutnya" class="tombol tombol-abu">Berikutnya</button>
     </div>
 
+    {{-- Daftar judul yang dirender oleh Blade (server-side) --}}
+    <div class="kartu" style="margin-top:22px">
+        <h3>Judul Buku Terbaru (ditampilkan oleh Blade)</h3>
+
+        @can('kelola data buku')
+            <p><a href="{{ route('buku.create') }}" class="tombol tombol-kecil">Tambah Buku (halaman form)</a></p>
+        @endcan
+
+        <div class="bungkus-tabel">
+            <table class="tabel-data">
+                <thead>
+                    <tr><th>ID</th><th>Judul</th><th>Penulis</th><th>Aksi</th></tr>
+                </thead>
+                <tbody>
+                    @forelse ($bukuTerbaru as $b)
+                        <tr>
+                            <td>{{ $b->id }}</td>
+                            <td>{{ $b->judul }}</td>{{-- A1-MARKER --}}
+                            <td>{{ $b->penulis }}</td>
+                            <td>
+                                <div class="aksi-baris">
+                                    <a class="tombol tombol-kecil tombol-biru" href="{{ route('buku.detail', $b->id) }}">Detail</a>
+
+                                    @can('kelola data buku')
+                                        <a class="tombol tombol-kecil" href="{{ route('buku.edit', $b) }}">Ubah</a>
+                                        {{-- SOAL-2C-MARKER: form Hapus ditambahkan di sini --}}
+                                    @endcan
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr><td colspan="4" class="tabel-kosong">Belum ada buku.</td></tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <script>
         const API = "{{ url('/api/buku') }}";
         const WEB = "{{ url('/buku') }}";
-        const BISA_KELOLA = @json(auth()->user()->can('kelola data buku'));   // dari Spatie, hanya untuk tampilan
+        const BISA_KELOLA = @json(auth()->user()->can('kelola data buku'));   // hanya untuk tampilan
         const HEADER = {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -97,9 +137,9 @@
         const tombolBerikutnya = document.getElementById('tombol-berikutnya');
         const infoHalaman = document.getElementById('info-halaman');
 
-        let halaman = 1;       // halaman yang sedang tampil
-        let daftarBuku = [];   // data buku di halaman ini
-        let idEdit = null;     // null = mode tambah, angka = mode ubah
+        let halaman = 1;
+        let daftarBuku = [];
+        let idEdit = null;
 
         function tampilkanPesan(teks, jenis) {
             kotakPesan.textContent = teks;
@@ -115,7 +155,6 @@
             });
         }
 
-        // Satu pintu untuk semua permintaan: cek koneksi, cek response.ok, baca error dari API
         async function panggilApi(url, opsi = {}) {
             let response;
             try {
@@ -163,14 +202,12 @@
 
                 const tdAksi = document.createElement('td');
 
-                // Tombol Detail: semua yang boleh melihat daftar buku
                 const tautanDetail = document.createElement('a');
                 tautanDetail.textContent = 'Detail';
                 tautanDetail.href = WEB + '/' + buku.id;
                 tautanDetail.className = 'tombol tombol-kecil tombol-biru';
                 tdAksi.append(tautanDetail);
 
-                // Tombol Ubah dan Hapus: hanya yang punya izin "kelola data buku"
                 if (BISA_KELOLA) {
                     const tombolUbah = document.createElement('button');
                     tombolUbah.textContent = 'Ubah';
@@ -198,7 +235,6 @@
             try {
                 const hasil = await panggilApi(API + '?page=' + page);
 
-                // kalau halaman ini kosong (misal setelah hapus), mundur satu halaman
                 if (hasil.data.length === 0 && page > 1) {
                     return muatBuku(page - 1);
                 }
@@ -249,10 +285,10 @@
             const modeUbah = idEdit !== null;
 
             if (!confirm(modeUbah ? 'Simpan perubahan pada buku ini?' : 'Tambahkan buku baru ini?')) {
-                return;   // dibatalkan, tidak ada request
+                return;
             }
 
-            tombolSimpan.disabled = true;   // cegah klik ganda
+            tombolSimpan.disabled = true;
 
             try {
                 const hasil = await panggilApi(modeUbah ? API + '/' + idEdit : API, {
@@ -280,7 +316,7 @@
 
         async function hapusBuku(buku) {
             if (!confirm('Hapus buku "' + buku.judul + '"?')) {
-                return;   // dibatalkan, tidak ada request
+                return;
             }
 
             bersihkanPesan();
