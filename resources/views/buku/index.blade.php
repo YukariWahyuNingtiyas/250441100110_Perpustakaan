@@ -13,7 +13,7 @@
         @can('kelola-buku')
             <a href="{{ route('buku.create') }}" class="tombol">Tambah Buku</a>
         @endcan
-        <a href="{{ route('buku.fetch') }}" class="tombol tombol-garis">Tampilan Fetch API (Modul 4)</a>
+        <a href="{{ route('buku.fetch') }}" class="tombol tombol-garis">Tampilan Fetch</a>
     </div>
 
     <div class="bungkus-tabel">
