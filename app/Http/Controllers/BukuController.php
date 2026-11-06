@@ -21,12 +21,19 @@ class BukuController extends Controller
         ];
     }
 
-    // Daftar buku: tabel JavaScript (Modul 4) + daftar judul yang dirender Blade
+    // Daftar buku: satu daftar, dirender Blade, 10 data per halaman
     public function index()
     {
         return view('buku.index', [
-            'kategori'    => Kategori::orderBy('nama')->get(),
-            'bukuTerbaru' => Buku::latest('id')->limit(10)->get(),
+            'bukus' => Buku::with('kategori')->latest('id')->paginate(10),
+        ]);
+    }
+
+    // Tampilan Fetch API dari Modul 4 (tabel dan form JavaScript)
+    public function fetch()
+    {
+        return view('buku.fetch', [
+            'kategori' => Kategori::orderBy('nama')->get(),
         ]);
     }
 

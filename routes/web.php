@@ -49,6 +49,9 @@ Route::middleware('auth')->group(function () {
 
     // Pencarian buku (query binding) dan detail peminjaman (Policy, Soal 4)
     Route::get('/buku-cari', [BukuController::class, 'cari']);
+    Route::get('/buku-fetch', [BukuController::class, 'fetch'])
+        ->middleware('permission:lihat daftar buku')
+        ->name('buku.fetch');
     Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show']);
 
     // Profil milik sendiri (Breeze)
