@@ -74,6 +74,18 @@ class BukuController extends Controller
         return redirect()->route('buku.index')->with('status', 'Buku berhasil diperbarui.');
     }
 
+        public function destroy(Buku $buku)
+    {
+        if ($buku->peminjamans()->exists()) {
+            return redirect()->route('buku.index')
+                ->withErrors(['hapus' => 'Buku tidak bisa dihapus karena masih punya data peminjaman']);
+        }
+
+        $buku->delete();
+
+        return redirect()->route('buku.index')->with('status', 'Buku berhasil dihapus.');
+    }
+
         // SOAL 2b (A2): DITAMBAL. Query binding, nilai dikirim terpisah dari perintah SQL
     public function cari(Request $request)
     {
