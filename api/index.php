@@ -1,17 +1,25 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 
 define('LARAVEL_START', microtime(true));
 
-if (file_exists($maintenance = __DIR__.'/../storage/framework/maintenance.php')) {
-    require $maintenance;
-}
-
 require __DIR__.'/../vendor/autoload.php';
 
-/** @var Application $app */
+// Paksa Laravel/Symfony mengira front controller berada di akar (/),
+// bukan di /api, supaya url() dan route() tidak menyisipkan prefix /api
+$_SERVER['SCRIPT_NAME']     = '/index.php';
+$_SERVER['SCRIPT_FILENAME'] = __DIR__.'/index.php';
+$_SERVER['PHP_SELF']        = '/index.php';
+
 $app = require_once __DIR__.'/../bootstrap/app.php';
 
-$app->handleRequest(Request::capture());
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+
+$response = $kernel->handle(
+    $request = Request::capture()
+);
+
+$response->send();
+
+$kernel->terminate($request, $response);
