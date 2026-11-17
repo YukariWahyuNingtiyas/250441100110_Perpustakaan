@@ -1,4 +1,11 @@
+
 <x-guest-layout>
+    <div class="text-center mb-6">
+        <h2 class="text-xl font-bold text-gray-800">
+            Masuk ke Perpustakaan Digital (250441100110)
+        </h2>
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
