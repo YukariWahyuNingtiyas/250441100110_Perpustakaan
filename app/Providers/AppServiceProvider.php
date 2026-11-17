@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Providers;
@@ -23,12 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Memastikan URL menggunakan HTTPS saat production
         if (app()->environment('production')) {
             URL::forceScheme('https');
         }
 
-        // Aturan pusat: hanya admin dan petugas yang boleh mengelola buku
         Gate::define('kelola-buku', function (User $user) {
             return $user->hasAnyRole(['admin', 'petugas']);
         });
